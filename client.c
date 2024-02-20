@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <limits.h>
 #include <signal.h>
@@ -80,6 +79,6 @@ int	main(int argc, char **argv)
 		send_byte(argv[2][i], pid);
 		i++;
 	}
-    printf("%s\n", argv[2]);
+	send_byte(argv[2][i], pid);
 	return (0);
 }

@@ -11,8 +11,18 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 #include <signal.h>
+
+int	print_pid(pid_t num)
+{
+	char	symbol;
+
+	if (num / 10 != 0)
+		print_pid(num / 10);
+	symbol = (char)(num % 10) + '0';
+	write (1, &symbol, 1);
+	return (0);
+}
 
 void	handle_sigusr(int sig)
 {
@@ -26,7 +36,10 @@ void	handle_sigusr(int sig)
 	counter++;
 	if (counter == 8)
 	{
-		write(1, &byte, 1);
+		if (byte == '\0')
+			write(1, "\n", 1);
+		else
+			write(1, &byte, 1);
 		counter = 0;
 		byte = 0;
 	}
@@ -34,12 +47,10 @@ void	handle_sigusr(int sig)
 
 int	main(void)
 {
-	pid_t	pid;
-
 	signal(SIGUSR1, handle_sigusr);
 	signal(SIGUSR2, handle_sigusr);
-	pid = getpid();
-	printf("%d\n", pid);
+	print_pid(getpid());
+	write(1, "\n", 1);
 	while (1)
 		pause();
 	return (0);
