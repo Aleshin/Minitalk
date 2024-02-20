@@ -76,7 +76,8 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (argv[2][i] != '\0')
 	{
-		send_byte(argv[2][i], pid);
+		if (send_byte(argv[2][i], pid))
+			return (1);
 		i++;
 	}
 	send_byte(argv[2][i], pid);
